@@ -1,6 +1,7 @@
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_core.documents import Document
+import os
 
 # 1. 示例文本和嵌入模型
 texts = [
@@ -9,7 +10,11 @@ texts = [
     "LangChain是一个用于开发由语言模型驱动的应用程序的框架。"
 ]
 docs = [Document(page_content=t) for t in texts]
-embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-small-zh-v1.5")
+local_model_path = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+    "models", "bge-small-zh-v1_5"
+)
+embeddings = HuggingFaceEmbeddings(model_name=local_model_path)
 
 # 2. 创建向量存储并保存到本地
 vectorstore = FAISS.from_documents(docs, embeddings)

@@ -11,18 +11,26 @@ with torch.no_grad():
     multi_emb_1 = model.encode(image="../../data/C3/imgs/datawhale01.png", text="datawhale开源组织的logo")
     img_emb_2 = model.encode(image="../../data/C3/imgs/datawhale02.png")
     multi_emb_2 = model.encode(image="../../data/C3/imgs/datawhale02.png", text="datawhale开源组织的logo")
+    blue_whale_emb =  model.encode(text="a photo of blue whale")
+    img_blue_whale_emb = model.encode(image="../../data/C3/imgs/blue_whale.png")
+    multi_emb_3 = model.encode(image="../../data/C3/imgs/blue_whale.png", text="a photo of blue whale")
+
 
 # 计算相似度
 sim_1 = img_emb_1 @ img_emb_2.T
 sim_2 = img_emb_1 @ multi_emb_1.T
 sim_3 = text_emb @ multi_emb_1.T
 sim_4 = multi_emb_1 @ multi_emb_2.T
+sim_5 = blue_whale_emb @ img_blue_whale_emb.T
+sim_6 = blue_whale_emb @ multi_emb_3.T
 
 print("=== 相似度计算结果 ===")
 print(f"纯图像 vs 纯图像: {sim_1}")
 print(f"图文结合1 vs 纯图像: {sim_2}")
 print(f"图文结合1 vs 纯文本: {sim_3}")
 print(f"图文结合1 vs 图文结合2: {sim_4}")
+print(f"blue whale 文本 vs 蓝鲸图像: {sim_5}")
+print(f"blue whale 文本 vs 图文结合3: {sim_6}")
 
 # 向量信息分析
 print("\n=== 嵌入向量信息 ===")

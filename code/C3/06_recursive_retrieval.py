@@ -12,9 +12,13 @@ from llama_index.core import Settings
 
 load_dotenv()
 
+local_model_path = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+    "models", "bge-small-zh-v1_5"
+)
 # 配置模型
 Settings.llm = DeepSeek(model="deepseek-chat", api_key=os.getenv("DEEPSEEK_API_KEY"))
-Settings.embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-small-zh-v1.5")
+Settings.embed_model = HuggingFaceEmbedding(model_name=local_model_path)
 
 # 1.加载数据并为每个工作表创建查询引擎和摘要节点
 excel_file = '../../data/C3/excel/movie.xlsx'
